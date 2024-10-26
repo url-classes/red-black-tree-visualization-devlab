@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizador de Árbol Rojo-Negro</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    h1 {
+      margin-top: 20px;
+      color: #444;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 20px;
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .panel-control, .tree-visualizer, .node-details {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+
+    .panel-control {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .panel-control button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .panel-control button:hover {
+      background-color: #45a049;
+    }
+
+    .tree-visualizer {
+      width: 100%;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .node-details {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .node-details span {
+      font-size: 16px;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Visualizador de Árbol Rojo-Negro</h1>
+
+  <div class="container">
+    <!-- Sección de Editor de Árbol -->
+    <div class="section panel-control">
+      <button id="insert-node">Insertar Número</button>
+      <button id="search-node">Buscar Número</button>
+      <button id="inorder-traversal">Recorrido Inorden</button>
+      <button id="preorder-traversal">Recorrido Preorden</button>
+      <button id="postorder-traversal">Recorrido Postorden</button>
+    </div>
+
+    <!-- Sección de Visualizador -->
+    <div class="section tree-visualizer" id="treeVisualizer">
+      <!-- Aquí se generará el árbol gráfico mediante TypeScript -->
+    </div>
+
+    <!-- Sección de Datos del Nodo -->
+    <div class="section node-details" id="nodeDetails">
+      <h3>Detalles del Nodo Seleccionado</h3>
+      <span id="node-value">Valor: </span>
+      <span id="node-color">Color: </span>
+      <span id="node-parent">Padre: </span>
+      <span id="node-left-child">Hijo Izquierdo: </span>
+      <span id="node-right-child">Hijo Derecho: </span>
+    </div>
+  </div>
+
+  <script>
+    // Espacio para conectar las funcionalidades en TypeScript
+    // Los scripts TypeScript deberían insertarse aquí y en el archivo tsconfig.json correspondiente.
+  </script>
+</body>
+</html>
