@@ -1,95 +1,101 @@
-class Node {
+"use strict";
+class RBNode {
     constructor(data) {
         this.data = data;
-        this.color = 'red'; 
-        this.left = null;
-        this.right = null;
+        this.color = 'red';
+        this.left = this;
+        this.right = this;
         this.parent = null;
     }
 }
-
 class RedBlackTree {
     constructor() {
-        this.NIL = new Node(null); 
+        this.NIL = new RBNode(null);
         this.NIL.color = 'black';
+        this.NIL.left = this.NIL;
+        this.NIL.right = this.NIL;
         this.root = this.NIL;
     }
-
-    
     insert(data) {
-        const newNode = new Node(data);
+        const newNode = new RBNode(data);
         newNode.left = this.NIL;
         newNode.right = this.NIL;
-
         let y = this.NIL;
         let x = this.root;
-
-       
         while (x !== this.NIL) {
             y = x;
             if (newNode.data < x.data) {
                 x = x.left;
-            } else {
+            }
+            else {
                 x = x.right;
             }
         }
-
         newNode.parent = y;
         if (y === this.NIL) {
-            this.root = newNode; 
-        } else if (newNode.data < y.data) {
+            this.root = newNode;
+        }
+        else if (newNode.data < y.data) {
             y.left = newNode;
-        } else {
+        }
+        else {
             y.right = newNode;
         }
-
-        newNode.color = 'red'; // Nuevo nodo es rojo
-        this.fixInsert(newNode); // Balancear el árbol
+        newNode.color = 'red';
+        this.fixInsert(newNode);
     }
-
-    // Método para arreglar el árbol después de la inserción
     fixInsert(k) {
-        while (k.parent.color === 'red') {
-            if (k.parent === k.parent.parent.left) {
-                let u = k.parent.parent.right; // Tío
-                if (u.color === 'red') { // Caso 1: Tío rojo
+        var _a, _b, _c;
+        while (k.parent && k.parent.color === 'red') { 
+            if (k.parent === ((_a = k.parent.parent) === null || _a === void 0 ? void 0 : _a.left)) { 
+                let u = (_b = k.parent.parent) === null || _b === void 0 ? void 0 : _b.right; 
+                if (u && u.color === 'red') { 
                     k.parent.color = 'black';
                     u.color = 'black';
                     k.parent.parent.color = 'red';
                     k = k.parent.parent;
-                } else {
-                    if (k === k.parent.right) { // Caso 2: K es hijo derecho
+                }
+                else {
+                    if (k === k.parent.right) {
                         k = k.parent;
                         this.rotateLeft(k);
                     }
-                    // Caso 3: K es hijo izquierdo
-                    k.parent.color = 'black';
-                    k.parent.parent.color = 'red';
-                    this.rotateRight(k.parent.parent);
+                    if (k.parent) { 
+                        k.parent.color = 'black'; 
+                        if (k.parent.parent) { 
+                            k.parent.parent.color = 'red'; 
+                            this.rotateRight(k.parent.parent); 
+                        }
+                    }
                 }
-            } else {
-                let u = k.parent.parent.left; // Tío
-                if (u.color === 'red') { // Caso 1: Tío rojo
+            }
+            else {
+                let u = (_c = k.parent.parent) === null || _c === void 0 ? void 0 : _c.left; 
+                if (u && u.color === 'red') { 
                     k.parent.color = 'black';
                     u.color = 'black';
-                    k.parent.parent.color = 'red';
-                    k = k.parent.parent;
-                } else {
-                    if (k === k.parent.left) { // Caso 2: K es hijo izquierdo
+                    if (k.parent.parent) { 
+                        k.parent.parent.color = 'red'; 
+                        k = k.parent.parent; 
+                    }
+                }
+                else {
+                    if (k === k.parent.left) {
                         k = k.parent;
                         this.rotateRight(k);
                     }
-                    // Caso 3: K es hijo derecho
-                    k.parent.color = 'black';
-                    k.parent.parent.color = 'red';
-                    this.rotateLeft(k.parent.parent);
+                    if (k.parent) { 
+                        k.parent.color = 'black'; 
+                        if (k.parent.parent) { 
+                            k.parent.parent.color = 'red'; 
+                            this.rotateLeft(k.parent.parent); 
+                        }
+                    }
                 }
             }
         }
-        this.root.color = 'black'; // Asegurar que la raíz sea negra
+        this.root.color = 'black';
     }
-
-    // Rotación a la izquierda
     rotateLeft(x) {
         let y = x.right;
         x.right = y.left;
@@ -99,16 +105,18 @@ class RedBlackTree {
         y.parent = x.parent;
         if (x.parent === this.NIL) {
             this.root = y;
-        } else if (x === x.parent.left) {
-            x.parent.left = y;
-        } else {
-            x.parent.right = y;
+        }
+        else if (x.parent) { 
+            if (x === x.parent.left) { 
+                x.parent.left = y; 
+            }
+            else {
+                x.parent.right = y; 
+            }
         }
         y.left = x;
         x.parent = y;
     }
-
-    // Rotación a la derecha
     rotateRight(y) {
         let x = y.left;
         y.left = x.right;
@@ -118,34 +126,33 @@ class RedBlackTree {
         x.parent = y.parent;
         if (y.parent === this.NIL) {
             this.root = x;
-        } else if (y === y.parent.right) {
-            y.parent.right = x;
-        } else {
-            y.parent.left = x;
+        }
+        else if (y.parent) { 
+            if (y === y.parent.right) {
+                y.parent.right = x; 
+            }
+            else {
+                y.parent.left = x; 
+            }
         }
         x.right = y;
         y.parent = x;
     }
-
-    // Método para buscar un número
     search(data) {
         let node = this.root;
         while (node !== this.NIL) {
             if (data === node.data) {
-                return true; // Encontrado
+                return true;
             }
-            node = data < node.data ? node.left : node.right;
+            if (node.data)
+                node = data < node.data ? node.left : node.right;
         }
-        return false; // No encontrado
+        return false;
     }
-
-    // Método para visualizar el árbol
     visualize(ctx) {
         ctx.clearRect(0, 0, 800, 600);
         this.drawNode(ctx, this.root, 400, 50, 200);
     }
-
-    // Método recursivo para dibujar nodos
     drawNode(ctx, node, x, y, offset) {
         if (node !== this.NIL) {
             ctx.fillStyle = node.color;
@@ -153,8 +160,7 @@ class RedBlackTree {
             ctx.arc(x, y, 20, 0, Math.PI * 2);
             ctx.fill();
             ctx.fillStyle = "white";
-            ctx.fillText(node.data, x - 7, y + 5);
-
+            ctx.fillText(String(node.data), x - 7, y + 5);
             if (node.left !== this.NIL) {
                 ctx.beginPath();
                 ctx.moveTo(x, y + 20);
@@ -171,34 +177,36 @@ class RedBlackTree {
             }
         }
     }
-
-    // Recorridos
-    inorder(node, result) {
+    inorder(node = this.root, result = []) {
         if (node !== this.NIL) {
             this.inorder(node.left, result);
-            result.push(node.data);
+            if (node.data)
+                result.push(node.data);
             this.inorder(node.right, result);
         }
+        return result;
     }
-
-    preorder(node, result) {
+    preorder(node = this.root, result = []) {
         if (node !== this.NIL) {
-            result.push(node.data);
+            if (node.data)
+                result.push(node.data);
             this.preorder(node.left, result);
             this.preorder(node.right, result);
         }
+        return result;
     }
-
-    postorder(node, result) {
+    postorder(node = this.root, result = []) {
         if (node !== this.NIL) {
             this.postorder(node.left, result);
             this.postorder(node.right, result);
-            result.push(node.data);
+            if (node.data)
+                result.push(node.data);
         }
+        return result;
     }
 }
 
-// Inicialización del árbol y el canvas
+//manejar el dom
 const tree = new RedBlackTree();
 const canvas = document.getElementById("treeCanvas");
 const ctx = canvas.getContext("2d");
@@ -208,7 +216,7 @@ document.getElementById("insertButton").onclick = function() {
     if (!isNaN(value)) {
         tree.insert(value);
         tree.visualize(ctx);
-        document.getElementById("value").value = ""; // Limpiar campo de entrada
+        document.getElementById("value").value = ""; 
     }
 };
 
