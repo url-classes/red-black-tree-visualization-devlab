@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Árbol Rojo-Negro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Visualizador de Árbol Rojo-Negro</h1>
+    <div class="container">
+        <input type="number" id="value" placeholder="Ingresa un número">
+        <button id="insertButton">Insertar</button>
+        <button id="searchButton">Buscar</button>
+    </div>
+    <div class="container">
+        <button id="inorderButton">Recorrido Inorden</button>
+        <button id="preorderButton">Recorrido Preorden</button>
+        <button id="postorderButton">Recorrido Postorden</button>
+    </div>
+    <canvas id="treeCanvas" width="800" height="600"></canvas>
+    <div class="output" id="output"></div>
+    <script src="script.js"></script>
+</body>
+</html>
